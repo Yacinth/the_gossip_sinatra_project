@@ -4,7 +4,7 @@ require 'gossip'
 
 class ApplicationController < Sinatra::Base
   get '/' do
-    erb :index
+    erb :index, locals: {gossips: Gossip.all}
 	end
 
 	get '/gossips/new/' do
@@ -20,10 +20,20 @@ class ApplicationController < Sinatra::Base
 		redirect '/'
 	end
 
-	get '/' do 
-		#permet d'insérer dans notre fichier ERB des variables que l'on utilisera dans la vue.
-		erb :index, locals: {gossips: Gossip.all}
-	end
+	get '/gossips/:id' do
+		#@profil = all_gossips.select do |gossip|
+		#gossip.id == params[:id]
+		#end.first
+		id_value = params[:id]
+		puts id_value
+		id_value_int = id_value.to_i-1
+		puts id_value_int
+		tab_gossip = []
+		tab_gossip = Gossip.all
+		"potin numero #{id_value} auteur #{tab_gossip[id_value_int].author} : #{tab_gossip[id_value_int].content}"
+		
+		#erb :gossips/gossi
+	end  
 
 end
 
